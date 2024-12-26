@@ -48,26 +48,26 @@ namespace BookStoreWebApi.Controllers
 
         //}
 
-        [HttpGet("{fullName}")]
-        public IActionResult GetOrderByFullname(string fullName)
-        {
-            try
-            {
-                var package = new PKG_ORDER();
-                var orders = package.get_order_by_fulname(fullName); // Call the stored procedure to fetch orders
+        //[HttpGet("{fullName}")]
+        //public IActionResult GetOrderByFullname(string fullName)
+        //{
+        //    try
+        //    {
+        //        var package = new PKG_ORDER();
+        //        var orders = package.get_order_by_fulname(fullName); // Call the stored procedure to fetch orders
 
-                if (orders == null || orders.Count == 0)
-                {
-                    return NotFound($"No orders found for fullname: {fullName}");
-                }
+        //        if (orders == null || orders.Count == 0)
+        //        {
+        //            return NotFound($"No orders found for fullname: {fullName}");
+        //        }
 
-                return Ok(orders); // Return the orders as JSON
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Internal server error: {ex.Message}");
-            }
-        }
+        //        return Ok(orders); // Return the orders as JSON
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(500, $"Internal server error: {ex.Message}");
+        //    }
+        //}
 
 
         [HttpDelete("{id}")]
@@ -79,6 +79,62 @@ namespace BookStoreWebApi.Controllers
             package.delete_order(order);
         }
 
+
+
+        [HttpGet]
+        public List<Order> GetOrders()
+        {
+            var package = new PKG_ORDER();
+            var orders = new List<Order>();
+            orders = package.get_orders();
+            return orders;
+        }
+
+
+        [HttpGet("{fullName}")]
+        public IActionResult GetOrderByFullname(string fullName)
+        {
+            try
+            {
+                var orderPackage = new PKG_ORDER();
+                var orders = orderPackage.get_order_by_fulname(fullName);
+
+                if (orders == null || orders.Count == 0)
+                {
+                    return NotFound($"No orders found for fullname: {fullName}");
+                }
+
+                var bookPackage = new PKG_BOOKSTORE();
+                var result = new List<OrderWithBookDetails>();
+
+                foreach (var order in orders)
+                {
+                    var book = bookPackage.get_book_by_id(new BookStore { Id = order.BookId });
+
+                    if (book != null)
+                    {
+                        result.Add(new OrderWithBookDetails
+                        {
+                            Id = order.Id,
+                            FullName = order.FullName,
+                            OrderQuantity = order.OrderQuantity,
+                            Book = new BookDetails
+                            {
+                                Title = book.Title,
+                                Author = book.Author,
+                                Price = book.Price
+                            }
+                        });
+                    }
+                }
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
 
     }
 }

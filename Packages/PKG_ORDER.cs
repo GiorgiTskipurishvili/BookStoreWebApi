@@ -1,6 +1,7 @@
 ﻿using BookStoreWebApi.Models;
 using Oracle.ManagedDataAccess.Client;
 using System.Data;
+using System.Numerics;
 
 namespace BookStoreWebApi.Packages
 {
@@ -82,6 +83,39 @@ namespace BookStoreWebApi.Packages
         }
 
 
+
+        public List<Order> get_orders()
+        {
+            List<Order> orders = new List<Order>();
+
+            OracleConnection conn = new OracleConnection();
+            conn.ConnectionString = ConnStr;
+            conn.Open();
+
+            OracleCommand cmd = new OracleCommand();
+            cmd.Connection = conn;
+            cmd.CommandText = "olerning.PKG_GIORGITSK_ORDERS.get_orders";
+            cmd.CommandType = CommandType.StoredProcedure;
+
+
+            cmd.Parameters.Add("p_result", OracleDbType.RefCursor).Direction = ParameterDirection.Output;
+
+            OracleDataReader reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                Order order = new Order()
+                {
+                    Id = Convert.ToInt32(reader["id"]),
+                    FullName = reader["fullname"].ToString(),
+                    OrderQuantity = Convert.ToInt32(reader["orderquantity"]),
+                    BookId = Convert.ToInt32(reader["book_id"])
+                };
+                orders.Add(order);
+            }
+            conn.Close();
+            return orders;
+        }
 
     }
 }

@@ -1,6 +1,11 @@
+using BookStoreWebApi.Packages;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddScoped<PKG_BOOKSTORE>();
+builder.Services.AddScoped<PKG_ORDER>();
+
 
 // Configure CORS
 builder.Services.AddCors(options =>

@@ -134,6 +134,26 @@
   },
   {
     "ContainingType": "BookStoreWebApi.Controllers.OrderController",
+    "Method": "GetOrders",
+    "RelativePath": "api/Order",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[BookStoreWebApi.Models.Order, BookStoreWebApi, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "BookStoreWebApi.Controllers.OrderController",
     "Method": "GetOrderByFullname",
     "RelativePath": "api/Order/{fullName}",
     "HttpMethod": "GET",

@@ -39,3 +39,4 @@ C:\Users\g.tskipurishvili\Desktop\BookStoreProject\BookStoreWebApi\BookStoreWebA
 C:\Users\g.tskipurishvili\Desktop\BookStoreProject\BookStoreWebApi\BookStoreWebApi\obj\Debug\net8.0\BookStoreWebApi.pdb
 C:\Users\g.tskipurishvili\Desktop\BookStoreProject\BookStoreWebApi\BookStoreWebApi\obj\Debug\net8.0\BookStoreWebApi.genruntimeconfig.cache
 C:\Users\g.tskipurishvili\Desktop\BookStoreProject\BookStoreWebApi\BookStoreWebApi\obj\Debug\net8.0\ref\BookStoreWebApi.dll
+C:\Users\g.tskipurishvili\Desktop\BookStoreProject\BookStoreWebApi\BookStoreWebApi\obj\Debug\net8.0\BookStoreWebApi.sourcelink.json
